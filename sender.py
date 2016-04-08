@@ -8,7 +8,7 @@ import struct
 import sys
 import time
 
-message = 'This is Richy!'
+message = 'hostname: lamario\n\nresulotion: 1920x1080\ncapability: mp4, avi, png, jpeg'
 multicast_group = ('224.3.29.71', 10000)
 
 # Create the datagram socket
