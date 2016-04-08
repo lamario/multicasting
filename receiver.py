@@ -31,7 +31,8 @@ while True:
     try:
         print >>sys.stderr, json.loads(data)
     except:
-        print >>sys.stderr, 'received %s bytes from %s' % (address, )
+        print >>sys.stderr, 'Failed to decode from %s' %(address, )
+
     #print >>sys.stderr, 'received %s bytes from %s' % (len(data), address)
     print >>sys.stderr, ""
 
