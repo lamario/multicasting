@@ -7,6 +7,7 @@ import socket
 import struct
 import sys
 import json
+import datetime
 
 multicast_group = '224.3.29.71'
 server_address = ('', 10000)
@@ -23,17 +24,25 @@ group = socket.inet_aton(multicast_group)
 mreq = struct.pack('4sL', group, socket.INADDR_ANY)
 sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 
+deviceLog = {}
+
 # Receive/respond loop
 while True:
     print >>sys.stderr, '\nwaiting to receive message'
     data, address = sock.recvfrom(1024)
 
     try:
-        print >>sys.stderr, json.loads(data)
+        now = datetime.datetime.now()
+        parsedData = json.loads(data)
+
+        deviceLog [ parsedData ['hostname'] ] = { 'last seen' : now }
+
+        print deviceLog
+    #print >>sys.stderr, parsedData
     except:
         print >>sys.stderr, 'Failed to decode from %s' %(address, )
 
     #print >>sys.stderr, 'received %s bytes from %s' % (len(data), address)
     print >>sys.stderr, ""
 
-
+    
