@@ -6,6 +6,7 @@
 import socket
 import struct
 import sys
+import json
 
 multicast_group = '224.3.29.71'
 server_address = ('', 10000)
@@ -26,8 +27,12 @@ sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 while True:
     print >>sys.stderr, '\nwaiting to receive message'
     data, address = sock.recvfrom(1024)
-    
-    print >>sys.stderr, 'received %s bytes from %s' % (len(data), address)
-    print >>sys.stderr, data
+
+    try:
+        print >>sys.stderr, json.loads(data)
+    except:
+        print >>sys.stderr, 'received %s bytes from %s' % (address, )
+    #print >>sys.stderr, 'received %s bytes from %s' % (len(data), address)
+    print >>sys.stderr, ""
 
 
